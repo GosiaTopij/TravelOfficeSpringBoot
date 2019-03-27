@@ -1,5 +1,6 @@
 package com.example.traveloffice;
 
+import com.example.traveloffice.services.TravelOfficeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,5 @@ public class TravelofficeApplicationTests {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
-    public void contextLoads() {
-    }
 
 }
