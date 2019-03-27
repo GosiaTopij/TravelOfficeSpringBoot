@@ -1,14 +1,18 @@
-package com.example.traveloffice.modal;
+package com.example.traveloffice.repository;
 
-import com.exceptions.NoSuchCustomerException;
-import com.exceptions.NoSuchTripException;
+import com.example.traveloffice.exceptions.NoSuchCustomerException;
+import com.example.traveloffice.exceptions.NoSuchTripException;
+import com.example.traveloffice.modal.Customer;
+import com.example.traveloffice.modal.Trip;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class TravelOffice {
+@Repository
+public class TravelOfficeRepositoryImpl implements TravelOfficeRepository {
 
     private Map<String, Trip> trips = new HashMap<>();
     private Set<Customer> customers = new HashSet<>();
@@ -65,28 +69,27 @@ public class TravelOffice {
     public void findTripByDestination(String destination) throws NoSuchTripException {
         for (Map.Entry<String, Trip> entry : trips.entrySet()) {
             if (entry.getValue().toString().contains(destination)) {
-                System.out.println( entry.getValue());
+                System.out.println(entry.getValue());
                 return;
             }
         }
         throw new NoSuchTripException("Brak wycieczki.");
     }
 
-        public boolean removeCustomer (Customer c) throws NoSuchCustomerException {
-            if (c != null) {
-                if (customers.remove(c)) {
-                    return true;
-                }
+    public boolean removeCustomer(Customer c) throws NoSuchCustomerException {
+        if (c != null) {
+            if (customers.remove(c)) {
+                return true;
             }
-            throw new NoSuchCustomerException("Brak klienta.");
         }
-
-        public Set<Customer> getCustomers () {
-            return customers;
-        }
-
-        public Map<String, Trip> getTrips () {
-            return trips;
-        }
-
+        throw new NoSuchCustomerException("Brak klienta.");
     }
+
+    public Set<Customer> getCustomers() {
+        return customers;
+    }
+
+    public Map<String, Trip> getTrips() {
+        return trips;
+    }
+}
