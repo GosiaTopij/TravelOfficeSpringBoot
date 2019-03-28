@@ -5,6 +5,9 @@ public class Address {
     private String zip;
     private String city;
 
+    public Address() {
+    }
+
     @Override
     public String toString() {
         return "Address{" +
@@ -43,4 +46,6 @@ public class Address {
         this.zip = zip;
         this.city = city;
     }
+
+
 }

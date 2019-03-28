@@ -8,6 +8,9 @@ public abstract class Trip {
     private String destination;
     private double price;
 
+    public Trip() {
+    }
+
     public Trip(LocalDate start, LocalDate end, String destination) {
         this.start = start;
         this.end = end;
@@ -55,4 +58,6 @@ public abstract class Trip {
     public void setDestination(String destination) {
         this.destination = destination;
     }
+
+
 }

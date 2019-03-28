@@ -5,6 +5,12 @@ public class Customer {
     private Address address;
     private Trip trip;
 
+    public Customer(String name, Address address, Trip trip) {
+        this.name = name;
+        this.address = address;
+        this.trip = trip;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +

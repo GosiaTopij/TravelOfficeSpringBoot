@@ -4,13 +4,10 @@ import com.example.traveloffice.exceptions.NoSuchCustomerException;
 import com.example.traveloffice.exceptions.NoSuchTripException;
 import com.example.traveloffice.modal.Customer;
 import com.example.traveloffice.modal.Trip;
-import com.example.traveloffice.repository.TravelOfficeRepository;
 import com.example.traveloffice.repository.TravelOfficeRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
