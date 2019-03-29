@@ -1,6 +1,10 @@
 package com.example.traveloffice.modal;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import java.time.LocalDate;
 
+@JsonDeserialize(as = AbroadTrip.class)
 public abstract class Trip {
 
     private LocalDate start;

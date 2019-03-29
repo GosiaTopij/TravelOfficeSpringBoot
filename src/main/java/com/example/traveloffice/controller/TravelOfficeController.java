@@ -5,11 +5,9 @@ import com.example.traveloffice.exceptions.NoSuchTripException;
 import com.example.traveloffice.modal.*;
 import com.example.traveloffice.services.TravelOfficeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,7 +17,6 @@ public class TravelOfficeController {
     @Autowired
     private TravelOfficeService travelOfficeService;
 
-
     @PostMapping(value = "/add-customer", consumes = "application/json", produces = "application/json")
     public Customer addCustomer(@RequestBody Customer customer) {
         travelOfficeService.addCustomer(customer);
@@ -27,50 +24,27 @@ public class TravelOfficeController {
     }
 
     @PostMapping(value = "/add-trip/abroad/{destination}", consumes = "application/json", produces = "application/json")
-    public Trip addAbroadTrip(@Valid @RequestBody AbroadTrip trip, @PathVariable String destination) {
-           travelOfficeService.addTrip(destination,trip);
-           return trip;
-    }
-
-    @PostMapping(value = "/add-trip/domestic/{destination}", consumes = "application/json", produces = "application/json")
-    public Trip addDomesticTrip(@RequestBody DomesticTrip trip, @PathVariable String destination) {
-        travelOfficeService.addTrip(destination,trip);
+    public Trip addAbroadTrip(@RequestBody AbroadTrip trip, @PathVariable(value = "destination") String destination) {
+        travelOfficeService.addTrip(destination, trip);
         return trip;
     }
 
-//    @GetMapping("/add-trip")
-//    public Trip addTrip(@RequestParam String id, @RequestParam String startDate, @RequestParam String endDate, @RequestParam String destination, @RequestParam double price, @RequestParam String type, @RequestParam double discount,@RequestParam double insurance) {
-//
-//        if (type.toLowerCase().equals("krajowy")) {
-//            Trip domesticTrip = new DomesticTrip(LocalDate.parse(startDate), LocalDate.parse(endDate), destination);
-//            domesticTrip.setPrice(price);
-//            ((DomesticTrip) domesticTrip).setOwnArrivalDiscount(discount);
-//            travelOfficeService.addTrip(id, domesticTrip);
-//            return domesticTrip;
-//        } else if (type.toLowerCase().equals("zagraniczny")) {
-//            Trip abroadTrip = new AbroadTrip(LocalDate.parse(startDate), LocalDate.parse(endDate), destination);
-//            abroadTrip.setPrice(price);
-//            ((AbroadTrip) abroadTrip).setInsurance(insurance);
-//            travelOfficeService.addTrip(id, abroadTrip);
-//            return abroadTrip;
-//        } else {
-//            System.out.println("Niepoprawny typ podróży");
-//        }
-//        return null;
-//    }
+    @PostMapping(value = "/add-trip/domestic/{destination}", consumes = "application/json", produces = "application/json")
+    public Trip addDomesticTrip(@RequestBody DomesticTrip trip, @PathVariable(value = "destination") String destination) {
+        travelOfficeService.addTrip(destination, trip);
+        return trip;
+    }
 
-    @GetMapping("/remove-customer")
-    public String removeCustomer(@RequestParam String firstName, @RequestParam String lastName) throws NoSuchCustomerException {
-        String name = firstName + " " + lastName;
+    @GetMapping("/remove-customer/{name}")
+    public ResponseEntity<Void> removeCustomer(@PathVariable(value = "name") String name) throws NoSuchCustomerException {
         Customer customer = null;
         customer = travelOfficeService.findCustomerByName(name);
         travelOfficeService.removeCustomer(customer);
-        return "Usunięto klienta";
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/assign")
-    public void assign(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String id) {
-        String name = firstName + " " + lastName;
+    public void assign(@RequestParam String name, @RequestParam String id) {
         Customer customer = null;
         try {
             customer = travelOfficeService.findCustomerByName(name);
@@ -87,9 +61,9 @@ public class TravelOfficeController {
         }
     }
 
-    @GetMapping("/remove-trip")
-    public String removeTrip(@RequestParam String id) throws NoSuchTripException {
-        travelOfficeService.removeTrip(id);
+    @GetMapping("/remove-trip/{destination}")
+    public String removeTrip(@PathVariable(required = true) String destination) throws NoSuchTripException {
+        travelOfficeService.removeTrip(destination);
         return "Usunieto wycieczke";
     }
 

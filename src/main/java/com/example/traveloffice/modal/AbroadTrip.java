@@ -1,9 +1,15 @@
 package com.example.traveloffice.modal;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import java.time.LocalDate;
 
+@JsonDeserialize(as = AbroadTrip.class)
 public class AbroadTrip extends Trip {
     private double insurance;
+
+    public AbroadTrip() {
+    }
 
     public AbroadTrip(LocalDate start, LocalDate end, String destination) {
         super(start, end, destination);

@@ -11,6 +11,9 @@ public class Customer {
         this.trip = trip;
     }
 
+    public Customer() {
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
